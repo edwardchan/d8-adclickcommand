@@ -2,6 +2,7 @@
 
 namespace Drupal\adclickcommand\Entity;
 
+use Drupal\adclickcommand\ClickCommandClicks;
 use Drupal\adclickcommand\AdClickCommandInterface;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
@@ -9,6 +10,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\user\UserInterface;
+
 
 /**
  * Defines the AdClickCommand entity.
@@ -128,163 +130,178 @@ use Drupal\user\UserInterface;
  */
 class AdClickCommand extends ContentEntityBase implements AdClickCommandInterface {
 
-  use EntityChangedTrait;
+    use EntityChangedTrait;
 
-  /**
-   * {@inheritdoc}
-   *
-   * When a new entity instance is added, set the user_id entity reference to
-   * the current user as the creator of the instance.
-   */
-  public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
-    parent::preCreate($storage_controller, $values);
-    $values += array(
-      'user_id' => \Drupal::currentUser()->id(),
-    );
-  }
+    /**
+     * {@inheritdoc}
+     *
+     * When a new entity instance is added, set the user_id entity reference to
+     * the current user as the creator of the instance.
+     */
+    public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
+        parent::preCreate($storage_controller, $values);
+        $values += array(
+            'user_id' => \Drupal::currentUser()->id(),
+        );
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getCreatedTime() {
-    return $this->get('created')->value;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getCreatedTime() {
+        return $this->get('created')->value;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getChangedTime() {
-    return $this->get('changed')->value;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getChangedTime() {
+        return $this->get('changed')->value;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getOwner() {
-    return $this->get('user_id')->entity;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwner() {
+        return $this->get('user_id')->entity;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getOwnerId() {
-    return $this->get('user_id')->target_id;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwnerId() {
+        return $this->get('user_id')->target_id;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function generateURL($id) {
-    return 'http://ad.thrillist.com/ad/0/click/' . $id;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function generateURL($id) {
+        return 'http://ad.thrillist.com/ad/0/click/' . $id;
+    }
 
-  /**
-   * Get command clicks.
-   *
-   * @param int $ccid
-   *   An id of a click command.
-   *
-   * @return int
-   *   An int.
-   */
-  public function getClicks($id) {
-    return $this->entityQuery('click_command_clicks')->condition('ccid', $id)->execute()->fetchAll();
-  }
+    /**
+     * Get command clicks.
+     *
+     * @param int $ccid
+     *   An id of a click command.
+     *
+     * @return int
+     *   An int.
+     */
+    public function getClicks($id) {
+        return  \Drupal::service('adclickcommand.clicks_command_clicks')->getClickCount($id);
+            //$this->entityQuery('click_command_clicks')->condition('ccid', $id)->execute()->fetchAll();
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setOwnerId($uid) {
-    $this->set('user_id', $uid);
-    return $this;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function setOwnerId($uid) {
+        $this->set('user_id', $uid);
+        return $this;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setOwner(UserInterface $account) {
-    $this->set('user_id', $account->id());
-    return $this;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function setOwner(UserInterface $account) {
+        $this->set('user_id', $account->id());
+        return $this;
+    }
 
-  /**
-   * {@inheritdoc}
-   *
-   * Define the field properties here.
-   *
-   * Field name, type and size determine the table structure.
-   *
-   * In addition, we can define how the field and its content can be manipulated
-   * in the GUI. The behaviour of the widgets used can be determined here.
-   */
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+    /**
+     * {@inheritdoc}
+     *
+     * Define the field properties here.
+     *
+     * Field name, type and size determine the table structure.
+     *
+     * In addition, we can define how the field and its content can be manipulated
+     * in the GUI. The behaviour of the widgets used can be determined here.
+     */
+    public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
-    $fields = parent::baseFieldDefinitions($entity_type);
+        $fields = parent::baseFieldDefinitions($entity_type);
 
-    // Standard field, used as unique if primary index.
-    $fields['id'] = BaseFieldDefinition::create('integer')
+        // Standard field, used as unique if primary index.
+        $fields['id'] = BaseFieldDefinition::create('integer')
             ->setLabel(t('CCID'))
             ->setDescription(t('The CCID of the AdClickCommand.'))
             ->setReadOnly(TRUE);
 
-    // Name field for the contact.
-    // We set display options for the view as well as the form.
-    // Users with correct privileges can change the view and edit configuration.
-    $fields['name'] = BaseFieldDefinition::create('string')
+        // Name field for the contact.
+        // We set display options for the view as well as the form.
+        // Users with correct privileges can change the view and edit configuration.
+        $fields['name'] = BaseFieldDefinition::create('string')
             ->setLabel(t('Name'))
             ->setDescription(t('The name of the AdClickCommand.'))
             ->setSettings(array(
-              'default_value' => '',
-              'max_length' => 255,
-              'text_processing' => 0,
+                'default_value' => '',
+                'max_length' => 255,
+                'text_processing' => 0,
             ))
             ->setDisplayOptions('view', array(
-              'label' => 'above',
-              'type' => 'string',
-              'weight' => -6,
+                'label' => 'above',
+                'type' => 'string',
+                'weight' => -6,
             ))
             ->setDisplayOptions('form', array(
-              'type' => 'string_textfield',
-              'weight' => -6,
+                'type' => 'string_textfield',
+                'weight' => -6,
             ))
             ->setDisplayConfigurable('form', TRUE)
             ->setDisplayConfigurable('view', TRUE);
 
-    $fields['url'] = BaseFieldDefinition::create('string')
+        $fields['url'] = BaseFieldDefinition::create('string')
             ->setLabel(t('URL'))
             ->setDescription(t('The URL of the AdClickCommand.'))
             ->setSettings(array(
-              'default_value' => '',
-              'max_length' => 255,
-              'text_processing' => 0,
+                'default_value' => '',
+                'max_length' => 255,
+                'text_processing' => 0,
             ))
             ->setDisplayOptions('view', array(
-              'label' => 'above',
-              'type' => 'string',
-              'weight' => -5,
+                'label' => 'above',
+                'type' => 'string',
+                'weight' => -5,
             ))
             ->setDisplayOptions('form', array(
-              'type' => 'string_textfield',
-              'weight' => -5,
+                'type' => 'string_textfield',
+                'weight' => -5,
             ))
             ->setDisplayConfigurable('form', TRUE)
             ->setDisplayConfigurable('view', TRUE);
 
-    $fields['uuid'] = BaseFieldDefinition::create('uuid')
+        $fields['uuid'] = BaseFieldDefinition::create('uuid')
             ->setLabel(t('UUID'))
             ->setDescription(t('Universally Unique ID'))
             ->setReadOnly(TRUE);
 
-    $fields['created'] = BaseFieldDefinition::create('created')
+        $fields['created'] = BaseFieldDefinition::create('created')
             ->setLabel(t('Created'))
             ->setDescription(t('The time that the user was created.'));
 
-    $fields['changed'] = BaseFieldDefinition::create('changed')
+        $fields['changed'] = BaseFieldDefinition::create('changed')
             ->setLabel(t('Changed'))
             ->setDescription(t('The time that the user was last edited.'))
             ->setTranslatable(TRUE);
 
-    return $fields;
-  }
+        return $fields;
+    }
 
+    public function preSave(EntityStorageInterface $storage) {
+        parent::preSave($storage);
+
+        // Update the {click_command_clicks} table prior to executing the hook.
+        // \Drupal::service('click_command_clicks')->update($this);
+    }
+
+    public static function postDelete(EntityStorageInterface $storage, array $entities) {
+        parent::postDelete($storage, $entities);
+
+        /*foreach ($entities as $id => $entity) {
+            \Drupal::service('click_command_clicks')->update($entity);
+        }*/
+    }
 }

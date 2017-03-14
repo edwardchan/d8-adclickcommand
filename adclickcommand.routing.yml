@@ -17,7 +17,6 @@ entity.adclickcommand.collection:
   # Calls the list controller, defined in the annotation of the entity.
     _entity_list: 'adclickcommand'
     _title: 'Click Command List'
-    _controller: '\Drupal\adclickcommand\Entity\Controller\AdClickCommandController::list'
   requirements:
   # Checks for permission directly.
     _permission: 'view click command'

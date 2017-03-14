@@ -1,0 +1,5 @@
+adclickcommand.click_command_click:
+    class: Drupal\adclickcommand\ClickCommandClicks
+    arguments: ['@database', '@current_user', '@entity.manager', '@state']
+    tags:
+      - { name: backend_overridable }
