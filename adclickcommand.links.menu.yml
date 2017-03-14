@@ -1,0 +1,12 @@
+# Define the menu links for this module
+
+entity.adclickcommand.collection:
+  title: 'Click Command Listing'
+  route_name: entity.adclickcommand.collection
+  description: 'List Click Command'
+  weight: 10
+adclickcommand.admin.structure.settings:
+  title: Click Command Settings
+  description: 'Configure Command'
+  route_name:  adclickcommand.settings
+  parent: system.admin_structure

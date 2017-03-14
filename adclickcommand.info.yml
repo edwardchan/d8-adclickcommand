@@ -1,0 +1,7 @@
+name: AdClickCommand
+type: module
+description: 'Urls For Sales Team.'
+package: Group Nine
+
+version: '8.x-1.0'
+core: '8.x'
