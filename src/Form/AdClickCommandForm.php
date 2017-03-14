@@ -42,7 +42,7 @@ class AdClickCommandForm extends ContentEntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $form_state->setRedirect('entity.adclickcommand.collection');
-    $entity = $this->getEntity();
+    $entity = $this->entity;
     $entity->save();
   }
 
