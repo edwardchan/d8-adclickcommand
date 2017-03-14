@@ -9,4 +9,3 @@ adclickcommand.add:
   appears_on:
     - entity.adclickcommand.collection
     - entity.adclickcommand.canonical
-
