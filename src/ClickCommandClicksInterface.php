@@ -1,14 +1,15 @@
 <?php
 
-namespace Drupal\adclickcommand;
+namespace Drupal\ad_click_command;
 
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\ad_click_command\Entity\AdClickCommand;
 
 /**
  * Provides an interface for storing and retrieving comment statistics.
  */
-interface AdClickCommandInterface {
+interface ClickCommandClicksInterface {
 
   /**
    * Read records for an array of entities.

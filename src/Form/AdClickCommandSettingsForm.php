@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\adclickcommand\Form;
+namespace Drupal\ad_click_command\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -8,9 +8,9 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Class AdClickCommandSettingsForm.
  *
- * @package Drupal\adclickcommand\Form
+ * @package Drupal\ad_click_command\Form
  *
- * @ingroup adclickcommand
+ * @ingroup ad_click_command
  */
 class AdClickCommandSettingsForm extends FormBase {
     /**
@@ -20,7 +20,7 @@ class AdClickCommandSettingsForm extends FormBase {
      *   The unique string identifying the form.
      */
     public function getFormId() {
-        return 'adclickcommand_settings';
+        return 'ad_click_command_settings';
     }
 
     /**
@@ -34,7 +34,7 @@ class AdClickCommandSettingsForm extends FormBase {
      * {@inheritdoc}
      */
     public function buildForm(array $form, FormStateInterface $form_state) {
-        $form['contact_settings']['#markup'] = 'Settings form for adclickcommand. Manage field settings here.';
+        $form['contact_settings']['#markup'] = 'Settings form for ad_click_command. Manage field settings here.';
         return $form;
     }
 

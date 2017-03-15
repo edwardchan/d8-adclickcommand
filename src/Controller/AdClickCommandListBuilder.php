@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\adclickcommand\Entity\Controller;
+namespace Drupal\ad_click_command\Controller;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -10,9 +10,9 @@ use Drupal\Core\Routing\UrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a list controller for adclickcommand entity.
+ * Provides a list controller for ad_click_command entity.
  *
- * @ingroup adclickcommand
+ * @ingroup ad_click_command
  */
 class AdClickCommandListBuilder extends EntityListBuilder {
 
@@ -62,7 +62,7 @@ class AdClickCommandListBuilder extends EntityListBuilder {
     public function render() {
         $build['description'] = array(
                 '#markup' => $this->t('AdClickCommand implements a .... .', array(
-                '@adminlink' => $this->urlGenerator->generateFromRoute('adclickcommand.settings'),
+                '@adminlink' => $this->urlGenerator->generateFromRoute('ad_click_command.settings'),
             )),
         );
         $build['table'] = parent::render();
@@ -125,7 +125,7 @@ class AdClickCommandListBuilder extends EntityListBuilder {
      * {@inheritdoc}
      */
     public function buildRow(EntityInterface $entity) {
-        /* @var $entity \Drupal\adclickcommand\Entity\AdClickCommand */
+        /* @var $entity \Drupal\ad_click_command\Entity\AdClickCommand */
         $row['id'] = $entity->id();
         $row['name'] = $entity->name->value;
         $row['url'] = $entity->url->value;

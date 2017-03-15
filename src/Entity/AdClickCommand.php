@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\adclickcommand\Entity;
+namespace Drupal\ad_click_command\Entity;
 
-use Drupal\adclickcommand\ClickCommandClicks;
-use Drupal\adclickcommand\AdClickCommandInterface;
+use Drupal\ad_click_command\ClickCommandClicks;
+use Drupal\ad_click_command\AdClickCommandInterface;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -15,7 +15,7 @@ use Drupal\user\UserInterface;
 /**
  * Defines the AdClickCommand entity.
  *
- * @ingroup adclickcommand
+ * @ingroup ad_click_command
  *
  *  .... @TODO
  *
@@ -71,17 +71,17 @@ use Drupal\user\UserInterface;
  * is read and cached. Don't forget to clear cache after changes.
  *
  * @ContentEntityType(
- *   id = "adclickcommand",
+ *   id = "ad_click_command",
  *   label = @Translation("Ad Click Command"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\adclickcommand\Entity\Controller\AdClickCommandListBuilder",
+ *     "list_builder" = "Drupal\ad_click_command\Controller\AdClickCommandListBuilder",
  *     "form" = {
- *       "add" = "Drupal\adclickcommand\Form\AdClickCommandForm",
- *       "edit" = "Drupal\adclickcommand\Form\AdClickCommandForm",
- *       "delete" = "Drupal\adclickcommand\Form\AdClickCommandDeleteForm",
+ *       "add" = "Drupal\ad_click_command\Form\AdClickCommandForm",
+ *       "edit" = "Drupal\ad_click_command\Form\AdClickCommandForm",
+ *       "delete" = "Drupal\ad_click_command\Form\AdClickCommandDeleteForm",
  *     },
- *     "access" = "Drupal\adclickcommand\AdClickCommandAccessControlHandler",
+ *     "access" = "Drupal\ad_click_command\AdClickCommandAccessControlHandler",
  *   },
  *   list_cache_contexts = { "user" },
  *   base_table = "click_command",
@@ -93,19 +93,19 @@ use Drupal\user\UserInterface;
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "canonical" = "/adclickcommand/{adclickcommand}",
- *     "edit-form" = "/adclickcommand/{adclickcommand}/edit",
- *     "delete-form" = "/adclickcommand/{adclickcommand}/delete",
- *     "collection" = "/adclickcommand/list"
+ *     "canonical" = "/ad_click_command/{ad_click_command}",
+ *     "edit-form" = "/ad_click_command/{ad_click_command}/edit",
+ *     "delete-form" = "/ad_click_command/{ad_click_command}/delete",
+ *     "collection" = "/ad_click_command/list"
  *   },
- *   field_ui_base_route = "adclickcommand.settings",
+ *   field_ui_base_route = "ad_click_command.settings",
  * )
  *
  * The 'links' above are defined by their path. For core to find the
  * corresponding route, the route name must follow the correct pattern:
  *
  * entity.<entity-name>.<link-name> (replace dashes with underscores)
- * Example: 'entity.adclickcommand.canonical'
+ * Example: 'entity.ad_click_command.canonical'
  *
  * See routing file above for the corresponding implementation
  *
@@ -190,7 +190,7 @@ class AdClickCommand extends ContentEntityBase implements AdClickCommandInterfac
      *   An int.
      */
     public function getClicks($id) {
-        return  \Drupal::service('adclickcommand.clicks_command_clicks')->getClickCount($id);
+        return  \Drupal::service('ad_click_command.click_command_clicks')->getClickCount($id);
             //$this->entityQuery('click_command_clicks')->condition('ccid', $id)->execute()->fetchAll();
     }
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\adclickcommand\Form;
+namespace Drupal\ad_click_command\Form;
 
 use Drupal\Core\Entity\AdClickCommandConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Provides a form for deleting a adclickcommand entity.
+ * Provides a form for deleting a ad_click_command entity.
  *
- * @ingroup adclickcommand
+ * @ingroup ad_click_command
  */
 class AdClickCommandDeleteForm extends ContentEntityConfirmFormBase {
 
@@ -26,7 +26,7 @@ class AdClickCommandDeleteForm extends ContentEntityConfirmFormBase {
      * If the delete command is canceled, return to the contact list.
      */
     public function getCancelUrl() {
-        return new Url('entity.adclickcommand.collection');
+        return new Url('entity.ad_click_command.collection');
     }
 
     /**
@@ -45,12 +45,12 @@ class AdClickCommandDeleteForm extends ContentEntityConfirmFormBase {
         $entity = $this->getEntity();
         $entity->delete();
 
-        $this->logger('adclickcommand')->notice('@type: deleted %title.',
+        $this->logger('ad_click_command')->notice('@type: deleted %title.',
             array(
                 '@type' => $this->entity->bundle(),
                 '%title' => $this->entity->label(),
             ));
-        $form_state->setRedirect('entity.adclickcommand.collection');
+        $form_state->setRedirect('entity.ad_click_command.collection');
     }
 
 }

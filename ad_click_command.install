@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install, update and uninstall functions for the adclickcommand module.
+ * Install, update and uninstall functions for the ad_click_command module.
  */
 
 /**
@@ -12,10 +12,10 @@
  *
  * @see hook_install()
  *
- * @ingroup adclickcommand
+ * @ingroup ad_click_command
  */
-function adclickcommand_install() {
-    drupal_install_schema('adclickcommand');
+function ad_click_command_install() {
+    drupal_install_schema('ad_click_command');
 }
 
 /**
@@ -25,9 +25,9 @@ function adclickcommand_install() {
  *
  * @see hook_schema()
  *
- * @ingroup adclickcommand
+ * @ingroup ad_click_command
  */
-function adclickcommand_schema() {
+function ad_click_command_schema() {
     if (db_table_exists('click_command_clicks')) {
         return;
     }
@@ -63,7 +63,7 @@ function adclickcommand_schema() {
 /**
  * Update schema. Add 'clicks'.
  */
-function adclickcommand_update_01() {
+function ad_click_command_update_01() {
     $ret = array();
     /* do
     add url, name

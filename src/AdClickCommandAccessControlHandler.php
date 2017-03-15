@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\adclickcommand;
+namespace Drupal\ad_click_command;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityAccessControlHandler;
@@ -41,7 +41,7 @@ class AdClickCommandAccessControlHandler extends EntityAccessControlHandler {
      * will be created during the 'add' process.
      */
     protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-        return AccessResult::allowedIfHasPermission($account, 'add adclickcommand');
+        return AccessResult::allowedIfHasPermission($account, 'add ad_click_command');
     }
 
 }

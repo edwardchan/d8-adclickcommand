@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\adclickcommand\Form;
+namespace Drupal\ad_click_command\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Form controller for the adclickcommand entity edit forms.
+ * Form controller for the ad_click_command entity edit forms.
  *
- * @ingroup adclickcommand
+ * @ingroup ad_click_command
  */
 class AdClickCommandForm extends ContentEntityForm {
 
@@ -17,7 +17,7 @@ class AdClickCommandForm extends ContentEntityForm {
      * {@inheritdoc}
      */
     public function buildForm(array $form, FormStateInterface $form_state) {
-        /* @var $entity \Drupal\adclickcommand\Entity\AdClickCommand */
+        /* @var $entity \Drupal\ad_click_command\Entity\AdClickCommand */
         $form = parent::buildForm($form, $form_state);
         $entity = $this->entity;
 
@@ -41,7 +41,7 @@ class AdClickCommandForm extends ContentEntityForm {
      * {@inheritdoc}
      */
     public function save(array $form, FormStateInterface $form_state) {
-        $form_state->setRedirect('entity.adclickcommand.collection');
+        $form_state->setRedirect('entity.ad_click_command.collection');
         $entity = $this->entity;
         $entity->save();
     }

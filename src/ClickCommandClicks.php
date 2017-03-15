@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\adclickcommand;
+namespace Drupal\ad_click_command;
 
 
-use Drupal\adclickcommand\Entity\AdClickCommand;
+use Drupal\ad_click_command\Entity\AdClickCommand;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;

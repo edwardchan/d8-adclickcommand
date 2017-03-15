@@ -1,12 +1,12 @@
 # All action links for this module
 
-adclickcommand.add:
+ad_click_command.add:
   # Which route will be called by the link
-  route_name: adclickcommand.add
+  route_name: ad_click_command.add
   title: 'Add click command'
 
   # Where will the link appear, defined by route name.
   appears_on:
-    - entity.adclickcommand.collection
-    - entity.adclickcommand.canonical
+    - entity.ad_click_command.collection
+    - entity.ad_click_command.canonical
 
