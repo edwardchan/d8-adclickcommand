@@ -28,7 +28,7 @@ function ad_click_command_install() {
  * @ingroup ad_click_command
  */
 function ad_click_command_schema() {
-    if (db_table_exists('click_command_clicks')) {
+    if ( \Drupal::database()->schema()->tableExists('click_command_clicks')) {
         return;
     }
     $schema['click_command_clicks'] = array(
@@ -65,9 +65,7 @@ function ad_click_command_schema() {
  */
 function ad_click_command_update_01() {
     $ret = array();
-    /* do
-    add url, name
-    */
+    /* add url, name */
 
     $new_field = array(
         'type' => 'int',
@@ -75,6 +73,7 @@ function ad_click_command_update_01() {
         'not null' => FALSE,
     );
 
-    db_add_field($ret, 'click_command_clicks', 'unique_clicks', $new_field);
+    \Drupal::database()->schema()->addField('click_command_clicks', 'unique_clicks', $new_field).
+
     return $ret;
 }
