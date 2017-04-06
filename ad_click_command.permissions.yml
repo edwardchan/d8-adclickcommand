@@ -1,10 +1,11 @@
-'delete adclickcommand':
+'delete ad_click_command':
   title: Delete click command.
-'add adclickcommand':
+'add ad_click_command':
   title: Add click command
-'view adclickcommand':
+'view ad_click_command':
   title: View click command
-'edit adclickcommand':
+'edit ad_click_command':
   title: Edit click command
-'administer adclickcommand':
+'administer ad_click_command':
   title: Administer settings
+
