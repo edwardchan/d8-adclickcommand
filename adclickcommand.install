@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the adclickcommand module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Creates some default entries on this module custom table.
+ *
+ * @see hook_install()
+ *
+ * @ingroup adclickcommand
+ */
+function adclickcommand_install() {
+  drupal_install_schema('adclickcommand');
+}
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ *
+ * @ingroup adclickcommand
+ */
+function adclickcommand_schema() {
+  if (db_table_exists('click_command_clicks')) {
+    return;
+  }
+  $schema['click_command_clicks'] = array(
+    'fields' => array(
+      'ad' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'ccid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'unique_clicks' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('ad', 'ccid'),
+    'indexes' => array(
+      'click_command_clicks_ad_idx' => array('ad'),
+      'click_command_clicks_ccid_idx' => array('ccid'),
+    ),
+  );
+
+  return $schema;
+}

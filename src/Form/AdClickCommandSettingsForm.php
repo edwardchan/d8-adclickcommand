@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\ad_click_command\Form;
+namespace Drupal\adclickcommand\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -8,34 +8,35 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Class AdClickCommandSettingsForm.
  *
- * @package Drupal\ad_click_command\Form
+ * @package Drupal\adclickcommand\Form
  *
- * @ingroup ad_click_command
+ * @ingroup adclickcommand
  */
 class AdClickCommandSettingsForm extends FormBase {
-    /**
-     * Returns a unique string identifying the form.
-     *
-     * @return string
-     *   The unique string identifying the form.
-     */
-    public function getFormId() {
-        return 'ad_click_command_settings';
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function submitForm(array &$form, FormStateInterface $form_state) {
-        // Empty implementation of the abstract submit class.
-    }
+  /**
+   * Returns a unique string identifying the form.
+   *
+   * @return string
+   *   The unique string identifying the form.
+   */
+  public function getFormId() {
+    return 'adclickcommand_settings';
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(array $form, FormStateInterface $form_state) {
-        $form['contact_settings']['#markup'] = 'Settings form for ad_click_command. Manage field settings here.';
-        return $form;
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Empty implementation of the abstract submit class.
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    $form['contact_settings']['#markup'] = 'Settings form for adclickcommand. Manage field settings here.';
+    return $form;
+  }
 
 }

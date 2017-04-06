@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\ad_click_command;
+namespace Drupal\adclickcommand;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityAccessControlHandler;
@@ -14,34 +14,34 @@ use Drupal\Core\Session\AccountInterface;
  */
 class AdClickCommandAccessControlHandler extends EntityAccessControlHandler {
 
-    /**
-     * {@inheritdoc}
-     *
-     * Link the activities to the permissions. checkAccess is called with the
-     * $operation as defined in the routing.yml file.
-     */
-    protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-        switch ($operation) {
-            case 'view':
-                return AccessResult::allowedIfHasPermission($account, 'view click command');
+  /**
+   * {@inheritdoc}
+   *
+   * Link the activities to the permissions. checkAccess is called with the
+   * $operation as defined in the routing.yml file.
+   */
+  protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
+    switch ($operation) {
+      case 'view':
+        return AccessResult::allowedIfHasPermission($account, 'view click command');
 
-            case 'edit':
-                return AccessResult::allowedIfHasPermission($account, 'edit click command');
+      case 'edit':
+        return AccessResult::allowedIfHasPermission($account, 'edit click command');
 
-            case 'delete':
-                return AccessResult::allowedIfHasPermission($account, 'delete click command');
-        }
-        return AccessResult::allowed();
+      case 'delete':
+        return AccessResult::allowedIfHasPermission($account, 'delete click command');
     }
+    return AccessResult::allowed();
+  }
 
-    /**
-     * {@inheritdoc}
-     *
-     * Separate from the checkAccess because the entity does not yet exist, it
-     * will be created during the 'add' process.
-     */
-    protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-        return AccessResult::allowedIfHasPermission($account, 'add ad_click_command');
-    }
+  /**
+   * {@inheritdoc}
+   *
+   * Separate from the checkAccess because the entity does not yet exist, it
+   * will be created during the 'add' process.
+   */
+  protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
+    return AccessResult::allowedIfHasPermission($account, 'add adclickcommand');
+  }
 
 }
