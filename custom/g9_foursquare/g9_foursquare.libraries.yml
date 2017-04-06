@@ -1,0 +1,4 @@
+import-venue-node:
+  js:
+    js/import-venue-node.js: {}
+    js/duplicate-venue-confirm.js: {}

@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for the g9_reporting module.
+ */
+
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ */
+function g9_reporting_install() {
+  // The terms to make sure exists.
+  $terms_to_check = [
+    'Sponsored',
+    'Editorial',
+  ];
+  foreach ($terms_to_check as $term_name) {
+    // Try to get the term by the name and the 'reporting' vocabulary.
+    $term = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties([
+        'name' => $term_name,
+        'vid' => 'reporting',
+      ]);
+
+    // If it does not exist, then create it.
+    if (empty($term)) {
+      $term = Term::create([
+        'name' => $term_name,
+        'vid' => 'reporting',
+      ])->save();
+    }
+  }
+}

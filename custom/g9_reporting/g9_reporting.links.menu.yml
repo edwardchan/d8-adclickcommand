@@ -1,0 +1,6 @@
+g9.reporting_configuration:
+  title: 'Reporting Category'
+  route_name: g9_reporting.configuration
+  parent: g9.admin_index
+  description: 'Configuration for enabling reporting category.'
+  weight: 9

@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * The G9 Admin Menu module.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function g9_admin_menu_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  if ($entity_type->id() != 'menu_link_content') {
+    return;
+  }
+
+  // Create the base field definition for allowed companies. This field will be
+  // a reference to the "Brand" taxonomy terms.
+  $fields['g9_admin_menu__brand_allow'] = BaseFieldDefinition::create('entity_reference')
+    ->setName('g9_admin_menu__brand_allow')
+    ->setTargetEntityTypeId('menu_link_content')
+    ->setLabel(t('Companies able to see the menu link'))
+    ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+    ->setSetting('target_type', 'taxonomy_term')
+    ->setSetting('handler', 'default:taxonomy_term')
+    ->setSetting('handler_settings', [
+      'target_bundles' => [
+        'brand' => 'brand',
+      ],
+    ])
+    ->setProvider('g9_admin_menu')
+    ->setDisplayOptions('form', [
+      'type' => 'options_buttons',
+      'settings' => [],
+      'weight' => 0,
+    ]);
+
+  // Create the base field definition for the allowed roles. This field will
+  // reference user entities.
+  $fields['g9_admin_menu__show_role'] = BaseFieldDefinition::create('entity_reference')
+    ->setName('g9_admin_menu__show_role')
+    ->setTargetEntityTypeId('menu_link_content')
+    ->setLabel(t('Roles able to see the menu link'))
+    ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+    ->setSetting('target_type', 'user_role')
+    ->setDisplayOptions('form', [
+      'type' => 'options_buttons',
+      'weight' => 0,
+    ]);
+}

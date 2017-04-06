@@ -1,0 +1,7 @@
+g9_reporting.configuration:
+  path: '/admin/config/services/reporting'
+  defaults:
+    _form: 'Drupal\g9_reporting\Form\ReportingConfigForm'
+    _title: 'Reporting Category'
+  requirements:
+    _permission: 'access administration pages'

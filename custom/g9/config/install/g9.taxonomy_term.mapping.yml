@@ -1,0 +1,65 @@
+# The taxonomy terms that should have their fields displayed on the output.
+# For example, if "company" was listed under 'show_fields', the JSON output
+# will contain all of the taxonomy term's field values:
+#  "company":
+#  {
+#      "0": {
+#          "meta": {
+#              "changed": "1488405288",
+#              "default_langcode": "1",
+#              "description": null,
+#              "field_display_name": "Supercall",
+#              "field_pinnacle_preview_url": null,
+#              "field_url": null,
+#              "field_vortex_company_id": null,
+#              "field_zuul_company_id": null,
+#              "langcode": "en",
+#              "name": "Supercall",
+#              "parent": null,
+#              "path": null,
+#              "tid": "2",
+#              "uuid": "03a0eedb-d21c-48e9-89d6-b698eac955e4",
+#              "vid": null,
+#              "weight": "0"
+#          },
+#          "name": "Supercall",
+#          "parent_tid": [],
+#          "tid": 2
+#      }
+#   }
+#
+# Otherwise, it will only display the term's name, parent_tid, and tid:
+#  "author":
+#  {
+#     "0": {
+#         "name": "Test author",
+#         "parent_tid": [],
+#         "tid": 6
+#     }
+#  }
+show_fields:
+  - company
+  - vertical
+
+# Label overrides for taxonomy fields.
+label_overrides:
+  field_banner_article: banner_article
+  field_banner_article_footer: banner_article_footer
+  field_banner_article_footer_mobi: banner_article_footer_mobile
+  field_banner_article_mobile: banner_article_mobile
+  field_banner_clickthrough_url: banner_article_clickthrough_url
+  field_banner_topics: banner_topics
+  field_banner_topics_mobile: banner_topics_mobile
+  field_sailthru_horizon_exclude: sailthru_horizon_exclude
+  field_banner_clickthrough: banner_clickthrough_url
+  field_zuul_company_id: zuul_company_id
+  field_vortex_company_id: vortex_company_id
+  field_pinnacle_preview_url: pinnacle_preview_base_url
+  field_biography: bio_s
+  field_facebook_id: facebook_s
+  field_google_id: google_plus_s
+  field_twitter_id: twitter_s
+
+
+# Fields to exclude from display.
+exclude_fields:

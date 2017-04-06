@@ -1,0 +1,5 @@
+services:
+  g9_admin_menu.company_access_check:
+    class:  Drupal\g9_admin_menu\Access\CompanyAccessCheck
+    tags:
+      - { name: access_check, applies_to: _company_access_check }

@@ -1,0 +1,12 @@
+# Label overrides for node fields across all content types. These overrides apply
+# unless another override is specified in the content type's config file.
+label_overrides:
+  field_brand: company
+  field_edition: edition
+  field_author: author
+  field_related_content: related_nodes
+  field_primary_vertical: primary_vertical
+
+# Fields to exclude from display.
+exclude_fields:
+  - published_at

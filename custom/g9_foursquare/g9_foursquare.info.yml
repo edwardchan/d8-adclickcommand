@@ -1,0 +1,9 @@
+name: Group Nine Foursquare
+type: module
+description: Group Nine Foursquare API integration.
+package: Group Nine
+
+core: 8.x
+
+dependencies:
+  - encrypt

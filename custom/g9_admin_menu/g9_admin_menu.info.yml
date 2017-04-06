@@ -1,0 +1,8 @@
+name: G9 Admin Menu
+type: module
+description: 'Custom module for rendering the G9 Admin Menu with '
+package: Thrillist
+dependencies:
+  - menu_link_content
+
+core: '8.x'

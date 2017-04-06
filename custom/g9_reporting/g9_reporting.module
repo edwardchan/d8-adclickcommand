@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Contains g9_reporting.module.
+ */
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function g9_reporting_node_presave(NodeInterface $node) {
+  // If the node is going to be published and has the 'field_reporting' field,
+  // process the logic for tagging the node with the proper term.
+  if ($node->isPublished() && $node->hasField('field_reporting')) {
+    $config = \Drupal::config('g9_reporting.settings');
+    $enabled = array_filter($config->get('enabled'));
+    $enabled = array_keys($enabled);
+
+    // If this content type is not enabled in the configuration, return.
+    if (!in_array($node->getType(), $enabled)) {
+      return;
+    }
+
+    $referenced_terms = $node->get('field_reporting')->referencedEntities();
+    // Iterate through all the referenced terms. If 'Sponsored' or 'Editorial'
+    // are already tagged, do nothing and just return.
+    foreach ($referenced_terms as $term) {
+      if ($term->label() == 'Sponsored' || $term->label() == 'Editorial') {
+        return;
+      }
+    }
+
+    // Otherwise, if the node hasn't been tagged with 'Sponsored' or 'Editorial'
+    // tag it.
+    $editorial_term = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties([
+        'name' => 'Editorial',
+        'vid' => 'reporting',
+      ]);
+    $editorial_term = reset($editorial_term);
+    $node->field_reporting->appendItem(['target_id' => $editorial_term->id()]);
+  }
+}

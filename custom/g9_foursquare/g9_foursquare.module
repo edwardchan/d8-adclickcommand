@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * @file
+ * Module file for the G9 Foursquare module.
+ */
+
+use Drupal\Core\Url;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\NestedArray;
+
+/**
+ * Implements hook_form_alter().
+ */
+function g9_foursquare_form_node_venue_form_alter(&$form, FormStateInterface $form_state) {
+  // Get the url of the venue search form. This will be used to compare it to
+  // see if we came from the venue search form, in which case the fields
+  // should be prepopulated from the venue details stored in the temporary
+  // storage.
+  $url = Url::fromRoute('g9_foursquare.venue_search_form', [], ['absolute' => TRUE])
+    ->toString();
+
+  // If the current request has a referer and the referer is the venue search
+  // form, prepare the venue details for prepopulation by the JS.
+  if (($referer = \Drupal::request()->server->get('HTTP_REFERER')) && ($referer == $url)) {
+    // Get the venue details from the temporary storage.
+    $data = \Drupal::service('user.private_tempstore')->get('g9_foursquare')->get('venue_details');
+
+    // If there are no details, return.
+    if (empty($data) || !isset($data['venue'])) {
+      return;
+    }
+
+    // Otherwise, get the field mapping that maps the drupal field name with
+    // the response keys.
+    $fields = \Drupal::config('g9_foursquare.venue.mapping')->get('mapping');
+    // If no mapping is found, return.
+    if (!$fields) {
+      return;
+    }
+
+    // Array to store the field keys and values for the JS to populate fields.
+    $mapping = [];
+
+    // Get the node object from the node to check the fields.
+    $node = $form_state->getFormObject()->getEntity();
+
+    // Iterate through the fields to get the field values from the venue
+    // details response. These will be passed to the JS to prepopulate the
+    // fields with the values.
+    foreach ($fields as $drupal_name => $response_name) {
+      if (!$node->hasField($drupal_name) || !$response_name) {
+        continue;
+      }
+      // If the node doesn't have the field or if a corresponding response
+      // key isn't specified, move to the next field.
+      // Get the field type from the field definition and based on the type,
+      // the HTML 'name' attribute for the field will be different. These
+      // names will be used as keys for the mapping array, which will be
+      // passed to the JS. The JS will use the key to look for the elements
+      // that have that "name" as an attribute and proceed to set the value
+      // of that input field to the value of the element in the mapping array.
+      $field_type = $node->get($drupal_name)
+        ->getFieldDefinition()
+        ->getType();
+
+      switch ($field_type) {
+        case 'integer':
+        case 'string':
+          $drupal_name .= '[0][value]';
+          break;
+
+        case 'link':
+          $drupal_name .= '[0][uri]';
+          break;
+
+        // Right now, we are only handling the above cases. To accommodate for
+        // other field types, add another case for it.
+        default:
+          continue;
+      }
+
+      // Get the value from the response array.
+      $key_exists = NULL;
+      $value = NestedArray::getValue($data['venue'], explode('/', $response_name), $key_exists);
+
+      // Add the element to the array keyed by the generated name attribute
+      // string and set the value found from the response array.
+      $mapping[$drupal_name] = $value;
+    }
+
+    // Set the venue source to 'foursquare'.
+    $mapping['field_venue_source'] = 'foursquare';
+
+    // Attach the JS library that will perform the prepopulating of fields.
+    $form['#attached']['library'][] = 'g9_foursquare/import-venue-node';
+    // The mapping results generated above will be stored in drupalSettings
+    // for retrieval in the JS.
+    $form['#attached']['drupalSettings']['g9_foursquare']['mapping'] = $mapping;
+
+    // Delete the temporary storage of the venue details because we are done.
+    \Drupal::service('user.private_tempstore')->get('g9_foursquare')->delete('venue_details');
+  }
+
+  // If there is an ID in the.
+  if (isset($data['venue']['id'])) {
+    // Get the value of the venue API ID.
+    $venue_id = $data['venue']['id'];
+    // Check if there are any existing nodes that have the venue API ID.
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'venue')
+      ->condition('field_venue_api_id', $venue_id);
+    $nids = $query->execute();
+    // If there are already nodes with the venue API ID, throw a form error.
+    if ($nids) {
+      $form['#attached']['drupalSettings']['g9_foursquare']['venue_exists'] = TRUE;
+      $form['#attached']['drupalSettings']['g9_foursquare']['venue_id'] = $venue_id;
+    }
+  }
+
+  // Set the venue API ID field as read-only.
+  $form['field_venue_api_id']['#attributes']['readonly'] = 'readonly';
+}
