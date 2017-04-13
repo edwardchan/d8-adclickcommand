@@ -1,0 +1,12 @@
+name: G9 User
+type: module
+description: A G9 User
+core: 8.x
+package: Group Nine
+
+dependencies:
+  - g9
+  - rest
+  - jwt
+  - jwt_auth_consumer
+  - jwt_auth_issuer

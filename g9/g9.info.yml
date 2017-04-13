@@ -1,0 +1,15 @@
+name: Group Nine
+type: module
+description: Group Nine specific utility functions.
+package: Group Nine
+
+core: 8.x
+
+dependencies:
+  - rest
+  - serialization
+  - jwt
+  - jwt_auth_consumer
+  - jwt_auth_issuer
+  - metatag
+  - pathauto

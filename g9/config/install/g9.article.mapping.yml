@@ -1,0 +1,9 @@
+# Label overrides for taxonomy fields.
+label_overrides:
+
+# Fields to exclude from display. This should be the Drupal field machine name (i.e., field_company).
+exclude_fields:
+
+# Fields that contain values to override any output. (i.e. "type: item" will replace any "type" value
+# with "item" regardless of the output from Drupal).
+value_overrides:
