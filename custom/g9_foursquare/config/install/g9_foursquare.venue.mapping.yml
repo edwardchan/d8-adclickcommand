@@ -1,0 +1,13 @@
+mapping:
+  title: name
+  field_address_1: location/address
+  field_address_cross: location/crossStreet
+  field_city: location/city
+  field_country: location/country
+  field_latitude: location/lat
+  field_longitude: location/lng
+  field_phone: contact/phone
+  field_state: location/state
+  field_venue_api_id: id
+  field_url: url
+  field_zip_code: location/postalCode

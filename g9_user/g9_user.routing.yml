@@ -1,0 +1,16 @@
+# API endpoints
+
+#g9_user.getaction:
+#  path: 'api/user/get.json'
+#  defaults: { _controller: '\Drupal\g9_user\Controller\G9UserAPIController::get' }
+#  methods:  [GET]
+#  requirements:
+#    _access: 'TRUE'
+#
+#g9_user.postaction:
+#  path: 'api/user/{user_id}/{action}/{version}'
+#  defaults: {_controller: '\Drupal\g9_user\Controller\G9UserAPIController::handle', action: 'default_action', version: 'v1'}
+#  methods:  [POST]
+#  requirements:
+#    _access: 'TRUE'
+

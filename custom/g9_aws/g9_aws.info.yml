@@ -1,0 +1,11 @@
+name: Amazon AWS Interface
+description: Defines an interface for Amazon AWS
+package: AWS
+core: 8.x
+type: module
+configure : g9_aws.settings
+
+dependencies:
+  - aws_sqs
+  - aws_sns
+  - algolia

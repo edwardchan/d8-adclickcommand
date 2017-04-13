@@ -1,0 +1,13 @@
+editorial.icons:
+  version: VERSION
+  css:
+    theme:
+      css/editorial.icons.css: {}
+
+vertical-mapping:
+  js:
+    js/vertical-mapping.js: {}
+
+vertical-node-form:
+  js:
+    js/vertical-node-form.js: {}

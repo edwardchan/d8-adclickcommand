@@ -1,0 +1,115 @@
+<?php
+
+/**
+ * @file
+ * AWS module functions.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Ensure AWS SQS keys are set and available in configuration.
+ */
+function g9_aws_update_8001() {
+  // Get the editable AWS SQS settings mutuable configuration object.
+  $aws_config_editable = \Drupal::configFactory()->getEditable('aws_sqs.settings');
+  // Get the overridden values from settings.php.
+  $aws_config = \Drupal::config('aws_sqs.settings');
+
+  // If there are values for AWS SQS in settings.php, check to make sure that
+  // the ones in the form are set, too.
+  if ($aws_config) {
+    // If there is no 'aws_sqs_aws_key' value in the config object, get it from
+    // settings.php and save.
+    if (!$aws_config_editable->get('aws_sqs_aws_key')) {
+      $aws_sqs_aws_key = $aws_config->get('aws_sqs_aws_key');
+      $aws_config_editable->set('aws_sqs_aws_key', $aws_sqs_aws_key)->save();
+    }
+    // If there is no 'aws_sqs_aws_secret' value in the config object, get it
+    // from settings.php and save.
+    if (!$aws_config_editable->get('aws_sqs_aws_secret')) {
+      $aws_sqs_aws_secret = $aws_config->get('aws_sqs_aws_secret');
+      $aws_config_editable->set('aws_sqs_aws_secret', $aws_sqs_aws_secret)->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function g9_aws_entity_insert(EntityInterface $entity) {
+  if (_is_valid_entity_type($entity) && _is_valid_bundle($entity)) {
+
+    // Push node data to SQS/Algolia.
+    \Drupal::service('g9_aws')->performNodeOperation($entity->id(), 'insert', $entity->bundle());
+
+    // Push data to SNS.
+    $message = [
+      'nid' => $entity->id(),
+      'op' => 'insert',
+      'type' => $entity->bundle(),
+    ];
+
+    $sns_settings = \Drupal::config('aws_sns.settings');
+    $aws_topic = $sns_settings->get('aws_sns.node_ops');
+    \Drupal::service('aws_sns')->sendMessage($aws_topic, $message);
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function g9_aws_entity_update(EntityInterface $entity) {
+  if (_is_valid_entity_type($entity) && _is_valid_bundle($entity)) {
+    // Push node data to SQS/Algolia.
+    \Drupal::service('g9_aws')->performNodeOperation($entity->id(), 'update', $entity->bundle());
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function g9_aws_entity_delete(EntityInterface $entity) {
+  if (_is_valid_entity_type($entity) && _is_valid_bundle($entity)) {
+    // Push node data to SQS/Algolia.
+    \Drupal::service('g9_aws')->performNodeOperation($entity->id(), 'delete', $entity->bundle());
+  }
+}
+
+/**
+ * Helper function to check if type is valid.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   An entity object.
+ *
+ * @return bool
+ *   Returns TRUE if 'node' entity type, FALSE if not.
+ */
+function _is_valid_entity_type(EntityInterface $entity) {
+  // Only allow the node entity operations for node entities.
+  if ($entity->getEntityTypeId() == 'node') {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+/**
+ * Helper function to check if node type matches configuration setting.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   An entity object.
+ *
+ * @return bool
+ *   Return TRUE if accepted node type, FALSE if not.
+ */
+function _is_valid_bundle(EntityInterface $entity) {
+  $config = \Drupal::config('g9_aws.settings');
+  $aws_accepted_types = $config->get('aws_accepted_types');
+
+  if (!empty($aws_accepted_types[$entity->bundle()])) {
+    return TRUE;
+  }
+
+  return FALSE;
+}

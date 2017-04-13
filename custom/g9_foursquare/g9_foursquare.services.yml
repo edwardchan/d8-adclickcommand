@@ -1,0 +1,7 @@
+services:
+  g9_foursquare.venue_search_details:
+    class: Drupal\g9_foursquare\FoursquareVenueSearchDetails
+    arguments: ['@http_client', '@logger.factory', '@config.factory', '@encryption']
+  g9_foursquare.venue_search:
+    class: Drupal\g9_foursquare\FoursquareVenueSearch
+    arguments: ['@http_client', '@logger.factory', '@config.factory', '@encryption', '@g9_foursquare.venue_search_details']

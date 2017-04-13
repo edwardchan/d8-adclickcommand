@@ -1,0 +1,7 @@
+g9_aws.configuration:
+  path: '/admin/config/services/aws'
+  defaults:
+    _form: '\Drupal\g9_aws\Form\SettingsForm'
+    _title: 'AWS'
+  requirements:
+    _permission: 'administer aws settings'

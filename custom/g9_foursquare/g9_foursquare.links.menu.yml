@@ -1,0 +1,13 @@
+g9_foursquare.configuration:
+  title: 'Foursquare'
+  route_name: g9_foursquare.configuration
+  parent: g9.admin_index
+  description: 'Configuration for Foursquare.'
+  weight: 9
+
+g9_foursquare.venue_search_form:
+  title: 'Foursquare Venue'
+  route_name: g9_foursquare.venue_search_form
+  parent: node.add_page
+  description: 'Add a venue from Foursquare.'
+  weight: 9

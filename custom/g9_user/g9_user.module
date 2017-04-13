@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains g9_user.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function g9_user_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the g9_user module.
+    case 'help.page.g9_user':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('A G9 User Api') . '</p>';
+      return $output;
+
+    default:
+  }
+}

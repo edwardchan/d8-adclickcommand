@@ -1,0 +1,22 @@
+/**
+ * @file
+ * Editorial tools icon styling.
+ */
+
+/* Bar styling (first row), currently unused. */
+.toolbar-bar .toolbar-icon-g9-editorial-tools:before {
+  background-image: url("../../../../core/misc/icons/787878/pencil.svg");
+}
+
+.toolbar-bar .toolbar-icon-g9-editorial-tools:active:before {
+  background-image: url("../../../../core/misc/icons/787878/pencil.svg");
+}
+
+/* Tray styling (second row) */
+.toolbar-tray .toolbar-icon.toolbar-icon-g9-editorial-tools:before {
+  background-image: url("../../../../core/misc/icons/787878/pencil.svg");
+}
+
+.toolbar-tray .toolbar-icon.toolbar-icon-g9-editorial-tools:active:before {
+  background-image: url("../../../../core/misc/icons/787878/pencil.svg");
+}

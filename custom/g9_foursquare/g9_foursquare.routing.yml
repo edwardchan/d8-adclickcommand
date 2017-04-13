@@ -1,0 +1,19 @@
+g9_foursquare.venue_search_form:
+  path: '/node/add/foursquare_venue'
+  defaults:
+    _title: 'Add Foursquare Venue'
+    _form: '\Drupal\g9_foursquare\Form\VenueSearchForm'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: TRUE
+
+g9_foursquare.configuration:
+  path: '/admin/config/services/foursquare'
+  defaults:
+    _form: 'Drupal\g9_foursquare\Form\ConfigForm'
+    _title: 'Foursquare'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

@@ -1,0 +1,34 @@
+g9.admin_index:
+  title: G9 Config
+  route_name: g9.admin_index
+  parent: system.admin_config
+  description: 'Configure functionality for G9.'
+  position: right
+  weight: -100
+
+g9.editorial_tools:
+  title: Editorial Tools
+  route_name: g9.editorial_tools
+  menu_name: admin
+  parent: system.admin
+
+g9.highlight_configuration:
+  title: 'Highlight'
+  route_name: g9.highlight_configuration
+  parent: g9.admin_index
+  description: 'Configuration to Highlight.'
+  weight: 9
+
+g9.vertical_configuration:
+  title: 'Verticals'
+  route_name: g9.vertical_configuration
+  parent: g9.admin_index
+  description: 'Configuration for mapping brands to their vertical vocabularies.'
+  weight: 10
+
+g9.save_update_configuration:
+  title: 'Save and Update'
+  route_name: g9.save_update_configuration
+  parent: g9.admin_index
+  description: 'Configuration to Save and Update.'
+  weight: 11

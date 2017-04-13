@@ -1,0 +1,100 @@
+services:
+  g9.node_route_subscriber:
+    class: Drupal\g9\Routing\NodeRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  g9.anonymous_user_rest_route_subscriber:
+    class: Drupal\g9\Routing\AnonymousUserRestRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  g9.highlight_view_route_subscriber:
+    class: Drupal\g9\Routing\HighlightViewRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  g9.rest_subscriber:
+    class: Drupal\g9\EventSubscriber\JwtAuthRestSubscriber
+    arguments: [ '@entity.manager' ]
+    tags:
+      - { name: event_subscriber }
+  g9.rest_issuer_subscriber:
+    class: Drupal\g9\EventSubscriber\JwtAuthRestIssuerSubscriber
+    arguments: [ '@current_user', '@request_stack' ]
+    tags:
+      - { name: event_subscriber }
+  g9.anonymous_user_rest_access:
+    class:  Drupal\g9\Access\AnonymousUserRestAccess
+    arguments: ['@jwt.authentication.jwt']
+    tags:
+      - { name: access_check, applies_to: _anonymous_user_rest_access }
+  g9.entity_resolver.taxonomy_meta:
+    class: Drupal\g9\EntityResolver\TaxonomyMetaResolver
+    arguments: ['@entity.manager', '@config.factory']
+    tags:
+      - { name: entity_resolver }
+
+  g9.normalizer.content_entity:
+    class: Drupal\g9\Normalizer\G9ContentEntityNormalizer
+    arguments: ['@database', '@entity_type.manager', '@config.factory']
+    tags:
+      - { name: normalizer }
+  g9.normalizer.image_pool_content_entity:
+    class: Drupal\g9\Normalizer\G9ImagePoolContentEntityNormalizer
+    arguments: ['@database', '@entity_type.manager', '@config.factory']
+    tags:
+      - { name: normalizer, priority: 14 }
+  g9.normalizer.node_entity:
+    class: Drupal\g9\Normalizer\G9NodeContentEntityNormalizer
+    arguments: ['@database', '@entity_type.manager', '@config.factory']
+    tags:
+      - { name: normalizer, priority: 8 }
+  g9.normalizer.term_entity:
+    class: Drupal\g9\Normalizer\G9TermContentEntityNormalizer
+    arguments: ['@database', '@entity_type.manager', '@config.factory']
+    tags:
+      - { name: normalizer, priority: 8 }
+  g9.normalizer.entity_reference_field_item:
+    class: Drupal\g9\Normalizer\G9EntityReferenceFieldItemNormalizer
+    tags:
+      - { name: normalizer, priority: 10 }
+  g9.normalizer.image_pool_reference_item:
+      class: Drupal\g9\Normalizer\G9ImagePoolReferenceItemNormalizer
+      arguments: ['@entity.manager', '@config.factory']
+      tags:
+        - { name: normalizer, priority: 11 }
+  g9.normalizer.taxonomy_reference_field_item:
+    class: Drupal\g9\Normalizer\G9TaxonomyReferenceFieldItemNormalizer
+    arguments: ['@config.factory', '@serializer.entity_resolver', '@entity_type.manager']
+    tags:
+      - { name: normalizer, priority: 11 }
+  g9.normalizer.author_reference:
+    class: Drupal\g9\Normalizer\G9AuthorReferenceNormalizer
+    arguments: ['@config.factory', '@serializer.entity_resolver', '@entity_type.manager']
+    tags:
+      - { name: normalizer, priority: 12 }
+  g9.normalizer.related_nodes_reference:
+    class: Drupal\g9\Normalizer\G9RelatedNodesReferenceItemListNormalizer
+    arguments: ['@config.factory', '@serializer.entity_resolver', '@entity_type.manager']
+    tags:
+      - { name: normalizer, priority: 13 }
+  g9.normalizer.list:
+    class: Drupal\g9\Normalizer\G9EntityReferenceFieldItemListNormalizer
+    tags:
+      - { name: normalizer, priority: 13 }
+  g9.normalizer.image_pool_reference_item_list:
+    class: Drupal\g9\Normalizer\G9ImagePoolReferenceItemListNormalizer
+    tags:
+      - { name: normalizer, priority: 14 }
+  g9.normalizer.typed_data:
+    class: Drupal\g9\Normalizer\G9TypedDataNormalizer
+    tags:
+      - { name: normalizer, priority: 10 }
+  g9.util:
+    class: Drupal\g9\Service\G9Util
+    arguments: ['@entity.query']
+    tags:
+      - { name: g9util }
+  g9.edition:
+      class: Drupal\g9\Entity\Edition
+      arguments: ['@database', '@entity.manager', '@state']
+      tags:
+        - { name: edition }

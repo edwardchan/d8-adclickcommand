@@ -1,0 +1,48 @@
+g9.admin_index:
+  path: /admin/config/g9
+  defaults:
+    _controller: \Drupal\system\Controller\SystemController::systemAdminMenuBlockPage
+    _title: G9
+  requirements:
+    _permission: access administration pages
+
+g9.editorial_tools:
+  path: /admin/editorial_tools
+  defaults:
+    _controller: \Drupal\system\Controller\SystemController::overview
+    link_id: g9.editorial_tools
+    _title: Editorial Tools
+  requirements:
+    _permission: access content
+
+g9.jwt_auth_issuer_controller_generate_token:
+  path: 'g9_jwt/token'
+  defaults:
+    _controller: '\Drupal\g9\Controller\JwtAuthRestIssuerController::tokenResponse'
+    _title: 'JWT Auth Issuer'
+  requirements:
+    _permission: access content
+
+g9.highlight_configuration:
+  path: '/admin/config/services/highlight'
+  defaults:
+    _form: 'Drupal\g9\Form\HighlightConfigForm'
+    _title: 'Highlight'
+  requirements:
+    _permission: 'access administration pages'
+
+g9.vertical_configuration:
+  path: '/admin/config/services/vertical'
+  defaults:
+    _form: 'Drupal\g9\Form\VerticalConfigForm'
+    _title: 'Verticals'
+  requirements:
+    _permission: 'access administration pages'
+
+g9.save_update_configuration:
+  path: '/admin/config/services/save-update'
+  defaults:
+    _form: 'Drupal\g9\Form\SaveUpdateConfigForm'
+    _title: 'Save and Update'
+  requirements:
+    _permission: 'access administration pages'

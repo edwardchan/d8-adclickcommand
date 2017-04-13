@@ -1,0 +1,6 @@
+g9_aws.configuration:
+  title: 'AWS'
+  route_name: g9_aws.configuration
+  parent: g9.admin_index
+  description: 'Configuration to AWS.'
+  weight: 10
